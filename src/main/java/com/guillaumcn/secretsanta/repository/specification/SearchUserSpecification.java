@@ -1,6 +1,7 @@
 package com.guillaumcn.secretsanta.repository.specification;
 
 import com.guillaumcn.secretsanta.domain.model.UserEntity;
+import com.guillaumcn.secretsanta.domain.request.user.SearchUserRequest;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
@@ -41,5 +42,14 @@ public class SearchUserSpecification implements Specification<UserEntity> {
         }
 
         return criteriaBuilder.and(predicates.toArray(new Predicate[0]));
+    }
+
+    public static SearchUserSpecification fromSearchRequest(SearchUserRequest searchUserRequest) {
+        return SearchUserSpecification.builder()
+                .uuid(searchUserRequest.getUuid())
+                .email(searchUserRequest.getEmail())
+                .lastName(searchUserRequest.getLastName())
+                .firstName(searchUserRequest.getFirstName())
+                .build();
     }
 }

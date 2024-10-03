@@ -1,4 +1,4 @@
-package com.guillaumcn.secretsanta.service;
+package com.guillaumcn.secretsanta.service.user;
 
 import com.guillaumcn.secretsanta.domain.exception.UserNotFoundException;
 import com.guillaumcn.secretsanta.domain.model.UserEntity;
@@ -21,38 +21,34 @@ import java.util.List;
 public class UserService {
 
     private final UserRepository userRepository;
+    private final UserRetrievalService userRetrievalService;
 
     @Transactional
     public CreateUserResponse createUser(CreateUserRequest createUserRequest) {
-        LocalDateTime now = LocalDateTime.now();
         UserEntity createdUser = userRepository.save(UserMapper.mapToUserEntity(createUserRequest));
-        createdUser.setCreatedAt(now);
-        createdUser.setUpdatedAt(now);
         return UserMapper.mapToCreateUserResponse(createdUser);
     }
 
     @Transactional(readOnly = true)
     public GetUserResponse getUser(String userUuid) throws UserNotFoundException {
-        UserEntity user = userRepository.findById(userUuid).orElseThrow(() -> new UserNotFoundException(userUuid));
-        return UserMapper.mapToGetUserResponse(user);
+        UserEntity user = userRetrievalService.findUser(userUuid);
+        return UserMapper.mapToGetUserResponse(user, true);
     }
 
     @Transactional(readOnly = true)
     public List<GetUserResponse> searchUsers(SearchUserRequest searchUserRequest) {
-        List<UserEntity> foundUsers = userRepository.findAll(searchUserRequest.toSpecification());
-        return foundUsers.stream().map(UserMapper::mapToGetUserResponse).toList();
+        List<UserEntity> foundUsers = userRetrievalService.searchUsers(searchUserRequest);
+        return foundUsers.stream().map((user -> UserMapper.mapToGetUserResponse(user, true))).toList();
     }
 
     @Transactional
     public void deleteUser(String userUuid) throws UserNotFoundException {
-        UserEntity user = userRepository.findById(userUuid).orElseThrow(() -> new UserNotFoundException(userUuid));
-        userRepository.delete(user);
+        userRepository.delete(userRetrievalService.findUser(userUuid));
     }
 
     @Transactional
     public void updateUser(String userUuid, UpdateUserRequest updateUserRequest) throws UserNotFoundException {
-        LocalDateTime now = LocalDateTime.now();
-        UserEntity user = userRepository.findById(userUuid).orElseThrow(() -> new UserNotFoundException(userUuid));
+        UserEntity user = userRetrievalService.findUser(userUuid);
         if (updateUserRequest.getPassword() != null) {
             user.setPassword(updateUserRequest.getPassword());
         }
@@ -62,6 +58,6 @@ public class UserService {
         if (updateUserRequest.getFirstName() != null) {
             user.setFirstName(updateUserRequest.getFirstName());
         }
-        user.setUpdatedAt(now);
+        user.setUpdatedAt(LocalDateTime.now());
     }
 }

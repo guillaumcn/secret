@@ -1,6 +1,5 @@
 package com.guillaumcn.secretsanta.domain.request.user;
 
-import com.guillaumcn.secretsanta.repository.specification.SearchUserSpecification;
 import lombok.*;
 
 @AllArgsConstructor
@@ -14,13 +13,4 @@ public class SearchUserRequest {
     private String email;
     private String lastName;
     private String firstName;
-
-    public SearchUserSpecification toSpecification() {
-        return SearchUserSpecification.builder()
-                .uuid(uuid)
-                .email(email)
-                .lastName(lastName)
-                .firstName(firstName)
-                .build();
-    }
 }

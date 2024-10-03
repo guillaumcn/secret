@@ -6,7 +6,8 @@ import com.guillaumcn.secretsanta.domain.request.user.SearchUserRequest;
 import com.guillaumcn.secretsanta.domain.request.user.UpdateUserRequest;
 import com.guillaumcn.secretsanta.domain.response.user.CreateUserResponse;
 import com.guillaumcn.secretsanta.domain.response.user.GetUserResponse;
-import com.guillaumcn.secretsanta.service.UserService;
+import com.guillaumcn.secretsanta.service.user.UserService;
+import jakarta.annotation.Nullable;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
@@ -26,7 +27,7 @@ public class UserController {
     }
 
     @GetMapping
-    public List<GetUserResponse> searchUsers(@Valid SearchUserRequest searchUserRequest) {
+    public List<GetUserResponse> searchUsers(@Valid @Nullable SearchUserRequest searchUserRequest) {
         return userService.searchUsers(searchUserRequest);
     }
 

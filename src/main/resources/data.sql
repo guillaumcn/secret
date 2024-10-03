@@ -69,3 +69,11 @@ ALTER TABLE `assignment_exception` ADD FOREIGN KEY (`target_user_uuid`) REFERENC
 ALTER TABLE `assignment_exception` ADD FOREIGN KEY (`group_uuid`) REFERENCES `group` (`uuid`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 ALTER TABLE `note` ADD FOREIGN KEY (`assignment_uuid`) REFERENCES `assignment` (`uuid`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+INSERT INTO `user` (uuid, email, password, first_name, last_name) VALUES ('111111111111111111111111111111111111', 'test1@test1.test1', 'test1', 'Test1', 'Test1');
+INSERT INTO `user` (uuid, email, password, first_name, last_name) VALUES ('111111111111111111111111111111111112', 'test2@test2.test2', 'test2', 'Test2', 'Test2');
+INSERT INTO `user` (uuid, email, password, first_name, last_name) VALUES ('111111111111111111111111111111111113', 'test3@test3.test3', 'test3', 'Test3', 'Test3');
+
+INSERT INTO `group` (uuid, name, owner_uuid) VALUES ('111111111111111111111111111111111111', 'Test1', '111111111111111111111111111111111111');
+
+INSERT INTO `group_user` (user_uuid, group_uuid) VALUES ('111111111111111111111111111111111112', '111111111111111111111111111111111111');

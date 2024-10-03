@@ -9,12 +9,15 @@ import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class UserMapper {
-    public static GetUserResponse mapToGetUserResponse(UserEntity userEntity) {
+    public static GetUserResponse mapToGetUserResponse(UserEntity userEntity, boolean withGroup) {
         return GetUserResponse.builder()
                 .uuid(userEntity.getUuid())
                 .email(userEntity.getEmail())
                 .lastName(userEntity.getLastName())
                 .firstName(userEntity.getFirstName())
+                .groups(withGroup ?
+                        userEntity.getGroups().stream().map(GroupMapper::mapToGetGroupResponse).toList() :
+                        null)
                 .createdAt(userEntity.getCreatedAt())
                 .updatedAt(userEntity.getUpdatedAt())
                 .build();
