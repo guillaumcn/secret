@@ -1,4 +1,4 @@
-package com.guillaumcn.secretsanta.domain.response;
+package com.guillaumcn.secretsanta.domain.response.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -11,7 +11,7 @@ import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class SearchUserResponse {
+public class GetUserResponse {
 
     private String uuid;
     private String email;

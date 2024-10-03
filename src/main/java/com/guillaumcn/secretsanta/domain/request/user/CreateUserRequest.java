@@ -1,6 +1,5 @@
-package com.guillaumcn.secretsanta.domain.request;
+package com.guillaumcn.secretsanta.domain.request.user;
 
-import com.guillaumcn.secretsanta.model.UserEntity;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -26,13 +25,4 @@ public class CreateUserRequest {
 
     @NotBlank
     private String lastName;
-
-    public UserEntity toUserEntity() {
-        return UserEntity.builder()
-                         .email(email)
-                         .firstName(firstName)
-                         .lastName(lastName)
-                         .password(password)
-                         .build();
-    }
 }

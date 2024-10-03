@@ -1,6 +1,6 @@
 package com.guillaumcn.secretsanta.repository.specification;
 
-import com.guillaumcn.secretsanta.model.UserEntity;
+import com.guillaumcn.secretsanta.domain.model.UserEntity;
 import jakarta.persistence.criteria.CriteriaBuilder;
 import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;

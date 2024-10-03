@@ -1,4 +1,4 @@
-package com.guillaumcn.secretsanta.domain.response;
+package com.guillaumcn.secretsanta.domain.response.user;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
