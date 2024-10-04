@@ -33,7 +33,7 @@ public class AssignmentExceptionController {
     }
 
     @DeleteMapping("/{assignment_exception_uuid}")
-    public void deleteUser(@PathVariable(name = "assignment_exception_uuid") String uuid) throws AssignmentExceptionNotFoundException {
+    public void deleteAssignmentException(@PathVariable(name = "assignment_exception_uuid") String uuid) throws AssignmentExceptionNotFoundException {
         assignmentExceptionService.deleteAssignmentException(uuid);
     }
 }

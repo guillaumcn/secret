@@ -20,12 +20,7 @@ public class NoteEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String uuid;
-
-    @ManyToOne
-    @JoinColumn(name = "assignment_uuid")
-    @NotNull
-    private AssignmentEntity assignment;
-
+    
     @NotNull
     private String value;
 

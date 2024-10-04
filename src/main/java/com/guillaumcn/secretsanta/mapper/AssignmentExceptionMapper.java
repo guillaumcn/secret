@@ -12,9 +12,12 @@ import lombok.NoArgsConstructor;
 public class AssignmentExceptionMapper {
     public static GetAssignmentExceptionResponse mapToGetAssignmentException(AssignmentExceptionEntity assignmentExceptionEntity) {
         return GetAssignmentExceptionResponse.builder()
+                .uuid(assignmentExceptionEntity.getUuid())
                 .sourceUser(UserMapper.mapToGetUserResponse(assignmentExceptionEntity.getSourceUser(), false))
                 .targetUser(UserMapper.mapToGetUserResponse(assignmentExceptionEntity.getTargetUser(), false))
                 .group(GroupMapper.mapToGetGroupResponse(assignmentExceptionEntity.getGroup()))
+                .createdAt(assignmentExceptionEntity.getCreatedAt())
+                .updatedAt(assignmentExceptionEntity.getUpdatedAt())
                 .build();
     }
 

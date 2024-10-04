@@ -8,6 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "assignment")
@@ -35,6 +36,9 @@ public class AssignmentEntity {
     @JoinColumn(name = "group_uuid")
     @NotNull
     private GroupEntity group;
+
+    @OneToMany(mappedBy = "assignment_uuid")
+    private List<NoteEntity> notes;
 
     @Column(name = "created_at", insertable = false, updatable = false)
     private LocalDateTime createdAt;
