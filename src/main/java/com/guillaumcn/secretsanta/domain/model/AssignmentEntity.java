@@ -46,7 +46,7 @@ public class AssignmentEntity {
     @NotNull
     private GroupEntity group;
 
-    @OneToMany(mappedBy = "assignment_uuid")
+    @OneToMany(mappedBy = "assignment")
     @Builder.Default
     private List<NoteEntity> notes = new ArrayList<>();
 

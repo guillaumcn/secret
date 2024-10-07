@@ -10,6 +10,7 @@ import com.guillaumcn.secretsanta.domain.response.user.GetUserResponse;
 import com.guillaumcn.secretsanta.mapper.UserMapper;
 import com.guillaumcn.secretsanta.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -22,10 +23,12 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final UserRetrievalService userRetrievalService;
+    private final PasswordEncoder passwordEncoder;
 
     @Transactional
     public CreateUserResponse createUser(CreateUserRequest createUserRequest) {
-        UserEntity createdUser = userRepository.save(UserMapper.mapToUserEntity(createUserRequest));
+        String encodedPassword = passwordEncoder.encode(createUserRequest.getPassword());
+        UserEntity createdUser = userRepository.save(UserMapper.mapToUserEntity(createUserRequest, encodedPassword));
         return UserMapper.mapToCreateUserResponse(createdUser);
     }
 
