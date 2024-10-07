@@ -13,10 +13,18 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class AssignmentExceptionRetrievalService {
+
     private final AssignmentExceptionRepository assignmentExceptionRepository;
 
     public AssignmentExceptionEntity findAssignmentException(String assignmentExceptionUuid) throws AssignmentExceptionNotFoundException {
         return assignmentExceptionRepository.findById(assignmentExceptionUuid).orElseThrow(() -> new AssignmentExceptionNotFoundException(assignmentExceptionUuid));
+    }
+
+    public List<AssignmentExceptionEntity> findAssignmentExceptionsForGroup(String groupUuid) {
+        SearchAssignmentExceptionSpecification searchAssignmentExceptionRequest = SearchAssignmentExceptionSpecification.builder()
+                                                                                                                        .groupUuid(groupUuid)
+                                                                                                                        .build();
+        return assignmentExceptionRepository.findAll(searchAssignmentExceptionRequest);
     }
 
     public List<AssignmentExceptionEntity> searchAssignmentException(SearchAssignmentExceptionRequest searchAssignmentExceptionRequest) {
