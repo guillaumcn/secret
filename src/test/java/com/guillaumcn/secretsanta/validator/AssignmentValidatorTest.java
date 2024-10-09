@@ -12,7 +12,7 @@ import static com.guillaumcn.secretsanta.creator.AssignmentExceptionCreator.crea
 import static com.guillaumcn.secretsanta.creator.UserCreator.createUser;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class AssignmentValidatorTest {
+class AssignmentValidatorTest {
 
     private static final String USER_UUID_1 = "USER_UUID_1";
     private static final String USER_UUID_2 = "USER_UUID_2";

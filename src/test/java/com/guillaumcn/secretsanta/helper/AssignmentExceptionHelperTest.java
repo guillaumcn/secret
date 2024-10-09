@@ -13,7 +13,7 @@ import static com.guillaumcn.secretsanta.creator.UserCreator.createUser;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
-public class AssignmentExceptionHelperTest {
+class AssignmentExceptionHelperTest {
 
     @Test
     void usersCorrespondToException_checkIsException_returnTrue() {
