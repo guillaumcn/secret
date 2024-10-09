@@ -14,12 +14,16 @@ public final class AssignmentValidator {
 
     public static void assertAssignationIsPossible(List<UserEntity> users, List<AssignmentExceptionEntity> assignmentExceptions) throws ImpossibleAssignmentException {
         for (UserEntity user : users) {
+            boolean hasPossibleAssignment = false;
             for (UserEntity potentialAssignee : users) {
                 if (!user.getUuid().equals(potentialAssignee.getUuid()) && !AssignmentExceptionHelper.isException(user, potentialAssignee, assignmentExceptions)) {
+                    hasPossibleAssignment = true;
                     break;
                 }
             }
-            throw new ImpossibleAssignmentException(user);
+            if (!hasPossibleAssignment) {
+                throw new ImpossibleAssignmentException(user);
+            }
         }
     }
 }
