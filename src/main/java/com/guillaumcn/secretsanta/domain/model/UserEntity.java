@@ -3,9 +3,6 @@ package com.guillaumcn.secretsanta.domain.model;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
@@ -16,10 +13,10 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -30,12 +27,8 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-@Builder
-public class UserEntity implements UserDetails {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private String uuid;
+@SuperBuilder
+public class UserEntity extends BaseObjectEntity implements UserDetails {
 
     @NotNull
     private String email;
@@ -50,12 +43,6 @@ public class UserEntity implements UserDetails {
     @Column(name = "last_name")
     @NotNull
     private String lastName;
-
-    @Column(name = "created_at", insertable = false, updatable = false)
-    private LocalDateTime createdAt;
-
-    @Column(name = "updated_at", insertable = false)
-    private LocalDateTime updatedAt;
 
     @ManyToMany(cascade = {CascadeType.DETACH, CascadeType.MERGE, CascadeType.PERSIST, CascadeType.REFRESH})
     @JoinTable(

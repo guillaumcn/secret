@@ -1,10 +1,19 @@
 package com.guillaumcn.secretsanta.domain.model;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Entity;
+import jakarta.persistence.FetchType;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,12 +23,8 @@ import java.util.List;
 @AllArgsConstructor
 @Getter
 @Setter
-@Builder
-public class GroupEntity {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private String uuid;
+@SuperBuilder
+public class GroupEntity extends BaseObjectEntity {
 
     @NotNull
     private String name;
@@ -28,12 +33,6 @@ public class GroupEntity {
     @JoinColumn(name = "owner_uuid")
     @NotNull
     private UserEntity owner;
-
-    @Column(name = "created_at", insertable = false, updatable = false)
-    private LocalDateTime createdAt;
-
-    @Column(name = "updated_at", insertable = false)
-    private LocalDateTime updatedAt;
 
     @ManyToMany(mappedBy = "groups", fetch = FetchType.LAZY)
     @Builder.Default
