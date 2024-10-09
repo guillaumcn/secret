@@ -1,9 +1,8 @@
-package com.guillaumcn.secretsanta.service.assignmentException.exception;
+package com.guillaumcn.secretsanta.service.assignment.exception;
 
 import com.guillaumcn.secretsanta.domain.exception.AssignmentExceptionNotFoundException;
 import com.guillaumcn.secretsanta.domain.model.AssignmentExceptionEntity;
 import com.guillaumcn.secretsanta.repository.AssignmentExceptionRepository;
-import com.guillaumcn.secretsanta.service.assignment.exception.AssignmentExceptionRetrievalService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
