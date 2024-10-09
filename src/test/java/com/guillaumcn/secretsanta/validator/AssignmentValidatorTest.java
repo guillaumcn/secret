@@ -3,14 +3,14 @@ package com.guillaumcn.secretsanta.validator;
 import com.guillaumcn.secretsanta.domain.exception.ImpossibleAssignmentException;
 import com.guillaumcn.secretsanta.domain.model.AssignmentExceptionEntity;
 import com.guillaumcn.secretsanta.domain.model.UserEntity;
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.Collections;
 import java.util.List;
 
 import static com.guillaumcn.secretsanta.creator.AssignmentExceptionCreator.createAssignmentException;
 import static com.guillaumcn.secretsanta.creator.UserCreator.createUser;
-import static org.junit.Assert.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class AssignmentValidatorTest {
 

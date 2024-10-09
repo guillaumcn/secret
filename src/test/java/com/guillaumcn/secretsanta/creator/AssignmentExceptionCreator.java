@@ -15,14 +15,16 @@ public final class AssignmentExceptionCreator {
 
     public static final String SOURCE_USER_UUID = "SOURCE_USER_UUID";
     public static final String TARGET_USER_UUID = "TARGET_USER_UUID";
+    public static final String ASSIGNMENT_EXCEPTION_UUID = "ASSIGNMENT_EXCEPTION_UUID";
 
     public static List<AssignmentExceptionEntity> createAssignmentExceptionListWithOneUser() {
-        AssignmentExceptionEntity assignmentException = createAssignmentException();
+        AssignmentExceptionEntity assignmentException = createAssignmentException(ASSIGNMENT_EXCEPTION_UUID);
         return Collections.singletonList(assignmentException);
     }
 
-    private static AssignmentExceptionEntity createAssignmentException() {
+    public static AssignmentExceptionEntity createAssignmentException(String uuid) {
         return AssignmentExceptionEntity.builder()
+                                        .uuid(uuid)
                                         .sourceUser(createUser(SOURCE_USER_UUID))
                                         .targetUser(createUser(TARGET_USER_UUID))
                                         .build();
