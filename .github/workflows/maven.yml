@@ -6,7 +6,7 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-name: Java CI with Maven
+name: Test and Sonar analyzes
 
 on:
   push:
@@ -29,3 +29,5 @@ jobs:
           cache: maven
       - name: Build with Maven
         run: mvn -B package --file pom.xml
+      - name: Run sonarqube check
+        run: mvn clean verify sonar:sonar -Pcoverage -Dsonar.token=${{ secrets.SONAR_TOKEN }} -Dsonar.host.url=${{ vars.SONAR_URL }} -Dsonar.organization=${{ vars.SONAR_ORGANIZATION }} -Dsonar.projectKey=${{ vars.SONAR_PROJECT_KEY }}
