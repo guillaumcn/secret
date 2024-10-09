@@ -75,16 +75,21 @@ public class AssignmentService {
 
     private static List<UserEntity> shuffleUntilValidAssignments(List<UserEntity> users, List<AssignmentExceptionEntity> assignmentExceptions) {
         List<UserEntity> shuffledUsers = new ArrayList<>(users);
-        Collections.shuffle(shuffledUsers);
 
-        for (int i = 0; i < users.size(); i++) {
-            UserEntity sourceUser = users.get(i);
-            UserEntity targetUser = shuffledUsers.get(i);
-            if (sourceUser.getUuid().equals(targetUser.getUuid()) || AssignmentExceptionHelper.isException(sourceUser, targetUser, assignmentExceptions)) {
-                Collections.shuffle(shuffledUsers);
-                i = -1;
+        boolean shuffleOk;
+        do {
+            Collections.shuffle(shuffledUsers);
+            shuffleOk = true;
+            for (int i = 0; i < users.size(); i++) {
+                UserEntity sourceUser = users.get(i);
+                UserEntity targetUser = shuffledUsers.get(i);
+                if (sourceUser.getUuid().equals(targetUser.getUuid()) || AssignmentExceptionHelper.isException(sourceUser, targetUser, assignmentExceptions)) {
+                    shuffleOk = false;
+                    break;
+                }
             }
-        }
+        } while (!shuffleOk);
+
         return shuffledUsers;
     }
 }
