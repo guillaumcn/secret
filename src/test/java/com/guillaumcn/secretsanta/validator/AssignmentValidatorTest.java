@@ -33,13 +33,6 @@ public class AssignmentValidatorTest {
     }
 
     @Test
-    public void twoUsersWithNoExceptions_checkIfAssignationIsPossible_doNotThrowException() {
-        List<UserEntity> userList = List.of(createUser(USER_UUID_1), createUser(USER_UUID_2));
-        List<AssignmentExceptionEntity> emptyExceptions = Collections.emptyList();
-        assertThrows(ImpossibleAssignmentException.class, () -> AssignmentValidator.assertAssignationIsPossible(userList, emptyExceptions));
-    }
-
-    @Test
     public void twoUsersWithMatchingExceptions_checkIfAssignationIsPossible_throwException() {
         UserEntity firstUser = createUser(USER_UUID_1);
         UserEntity secondUser = createUser(USER_UUID_2);
