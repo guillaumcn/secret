@@ -28,7 +28,7 @@ public class AssignmentExceptionRetrievalServiceTest {
     private AssignmentExceptionRetrievalService assignmentExceptionRetrievalService;
 
     @Test
-    public void assignmentExceptionExists_findAssignmentException_shouldReturnAssignmentException() throws AssignmentExceptionNotFoundException {
+    void assignmentExceptionExists_findAssignmentException_shouldReturnAssignmentException() throws AssignmentExceptionNotFoundException {
         when(assignmentExceptionRepository.findById(ASSIGNMENT_EXCEPTION_UUID)).thenReturn(Optional.of(createAssignmentException(ASSIGNMENT_EXCEPTION_UUID)));
 
         AssignmentExceptionEntity assignmentException = assignmentExceptionRetrievalService.findAssignmentException(ASSIGNMENT_EXCEPTION_UUID);
@@ -37,7 +37,7 @@ public class AssignmentExceptionRetrievalServiceTest {
     }
 
     @Test
-    public void assignmentExceptionNotExists_findAssignmentException_throwsAssignmentExceptionEntityNotFound() {
+    void assignmentExceptionNotExists_findAssignmentException_throwsAssignmentExceptionEntityNotFound() {
         when(assignmentExceptionRepository.findById(ASSIGNMENT_EXCEPTION_UUID)).thenReturn(Optional.empty());
 
         assertThrows(AssignmentExceptionNotFoundException.class, () -> assignmentExceptionRetrievalService.findAssignmentException(ASSIGNMENT_EXCEPTION_UUID));

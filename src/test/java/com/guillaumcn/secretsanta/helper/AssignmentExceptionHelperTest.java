@@ -14,9 +14,9 @@ import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 public class AssignmentExceptionHelperTest {
-    
+
     @Test
-    public void usersCorrespondToException_checkIsException_returnTrue() {
+    void usersCorrespondToException_checkIsException_returnTrue() {
         final List<AssignmentExceptionEntity> assignmentExceptions = createAssignmentExceptionListWithOneUser();
 
         UserEntity testedSourceUser = createUser(SOURCE_USER_UUID);
@@ -29,7 +29,7 @@ public class AssignmentExceptionHelperTest {
     }
 
     @Test
-    public void onlySourceUserCorrespondToException_checkIsException_returnFalse() {
+    void onlySourceUserCorrespondToException_checkIsException_returnFalse() {
         final List<AssignmentExceptionEntity> assignmentExceptions = createAssignmentExceptionListWithOneUser();
 
         UserEntity testedSourceUser = createUser(SOURCE_USER_UUID);
@@ -42,7 +42,7 @@ public class AssignmentExceptionHelperTest {
     }
 
     @Test
-    public void onlyDestinationUserCorrespondToException_checkIsException_returnFalse() {
+    void onlyDestinationUserCorrespondToException_checkIsException_returnFalse() {
         final List<AssignmentExceptionEntity> assignmentExceptions = createAssignmentExceptionListWithOneUser();
 
         UserEntity testedSourceUser = createUser("NOT_SOURCE_USER_UUID");
@@ -55,7 +55,7 @@ public class AssignmentExceptionHelperTest {
     }
 
     @Test
-    public void noUserCorrespondToException_checkIsException_returnFalse() {
+    void noUserCorrespondToException_checkIsException_returnFalse() {
         final List<AssignmentExceptionEntity> assignmentExceptions = createAssignmentExceptionListWithOneUser();
 
         UserEntity testedSourceUser = createUser("NOT_SOURCE_USER_UUID");

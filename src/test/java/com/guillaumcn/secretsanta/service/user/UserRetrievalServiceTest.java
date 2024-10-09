@@ -28,7 +28,7 @@ public class UserRetrievalServiceTest {
     private UserRetrievalService userRetrievalService;
 
     @Test
-    public void userExists_findUser_shouldReturnUser() throws UserNotFoundException {
+    void userExists_findUser_shouldReturnUser() throws UserNotFoundException {
         when(userRepository.findById(USER_UUID)).thenReturn(Optional.of(createUser(USER_UUID)));
 
         UserEntity user = userRetrievalService.findUser(USER_UUID);
@@ -37,7 +37,7 @@ public class UserRetrievalServiceTest {
     }
 
     @Test
-    public void userNotExists_findUser_throwsUserEntityNotFound() {
+    void userNotExists_findUser_throwsUserEntityNotFound() {
         when(userRepository.findById(USER_UUID)).thenReturn(Optional.empty());
 
         assertThrows(UserNotFoundException.class, () -> userRetrievalService.findUser(USER_UUID));

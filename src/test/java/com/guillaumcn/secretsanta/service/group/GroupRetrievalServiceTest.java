@@ -28,7 +28,7 @@ public class GroupRetrievalServiceTest {
     private GroupRetrievalService groupRetrievalService;
 
     @Test
-    public void groupExists_findGroup_shouldReturnGroup() throws GroupNotFoundException {
+    void groupExists_findGroup_shouldReturnGroup() throws GroupNotFoundException {
         when(groupRepository.findById(GROUP_UUID)).thenReturn(Optional.of(createGroup(GROUP_UUID)));
 
         GroupEntity group = groupRetrievalService.findGroup(GROUP_UUID);
@@ -37,7 +37,7 @@ public class GroupRetrievalServiceTest {
     }
 
     @Test
-    public void groupNotExists_findGroup_throwsGroupEntityNotFound() {
+    void groupNotExists_findGroup_throwsGroupEntityNotFound() {
         when(groupRepository.findById(GROUP_UUID)).thenReturn(Optional.empty());
 
         assertThrows(GroupNotFoundException.class, () -> groupRetrievalService.findGroup(GROUP_UUID));

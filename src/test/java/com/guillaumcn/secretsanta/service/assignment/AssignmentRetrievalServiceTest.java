@@ -28,7 +28,7 @@ public class AssignmentRetrievalServiceTest {
     private AssignmentRetrievalService assignmentRetrievalService;
 
     @Test
-    public void assignmentExists_findAssignment_shouldReturnAssignment() throws AssignmentNotFoundException {
+    void assignmentExists_findAssignment_shouldReturnAssignment() throws AssignmentNotFoundException {
         when(assignmentRepository.findById(ASSIGNMENT_UUID)).thenReturn(Optional.of(createAssignment(ASSIGNMENT_UUID)));
 
         AssignmentEntity assignment = assignmentRetrievalService.findAssignment(ASSIGNMENT_UUID);
@@ -37,7 +37,7 @@ public class AssignmentRetrievalServiceTest {
     }
 
     @Test
-    public void assignmentNotExists_findAssignment_throwsAssignmentEntityNotFound() {
+    void assignmentNotExists_findAssignment_throwsAssignmentEntityNotFound() {
         when(assignmentRepository.findById(ASSIGNMENT_UUID)).thenReturn(Optional.empty());
 
         assertThrows(AssignmentNotFoundException.class, () -> assignmentRetrievalService.findAssignment(ASSIGNMENT_UUID));
