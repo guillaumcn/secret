@@ -63,6 +63,7 @@ public class UserEntity implements UserDetails {
             joinColumns = {@JoinColumn(name = "user_uuid")},
             inverseJoinColumns = {@JoinColumn(name = "group_uuid")}
     )
+    @Builder.Default
     private List<GroupEntity> groups = new ArrayList<>();
 
     @Override
