@@ -21,10 +21,7 @@ public class AssignmentExceptionRetrievalService {
     }
 
     public List<AssignmentExceptionEntity> findAssignmentExceptionsForGroup(String groupUuid) {
-        SearchAssignmentExceptionSpecification searchAssignmentExceptionRequest = SearchAssignmentExceptionSpecification.builder()
-                                                                                                                        .groupUuid(groupUuid)
-                                                                                                                        .build();
-        return assignmentExceptionRepository.findAll(searchAssignmentExceptionRequest);
+        return assignmentExceptionRepository.findAllByGroupUuid(groupUuid);
     }
 
     public List<AssignmentExceptionEntity> searchAssignmentException(SearchAssignmentExceptionRequest searchAssignmentExceptionRequest) {

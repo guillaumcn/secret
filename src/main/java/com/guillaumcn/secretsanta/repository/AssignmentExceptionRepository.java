@@ -10,4 +10,5 @@ public interface AssignmentExceptionRepository extends JpaRepository<AssignmentE
 
     List<AssignmentExceptionEntity> findAll(Specification<AssignmentExceptionEntity> specification);
 
+    List<AssignmentExceptionEntity> findAllByGroupUuid(String groupUuid);
 }

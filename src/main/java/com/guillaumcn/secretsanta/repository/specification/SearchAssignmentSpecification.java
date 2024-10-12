@@ -7,6 +7,7 @@ import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import lombok.Builder;
+import lombok.Getter;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Builder
+@Getter
 public class SearchAssignmentSpecification implements Specification<AssignmentEntity> {
 
     private String groupUuid;
@@ -36,8 +38,8 @@ public class SearchAssignmentSpecification implements Specification<AssignmentEn
 
     public static SearchAssignmentSpecification fromSearchRequest(SearchAssignmentRequest searchAssignmentRequest) {
         return SearchAssignmentSpecification.builder()
-                .sourceUserUuid(searchAssignmentRequest.getSourceUserUuid())
-                .groupUuid(searchAssignmentRequest.getGroupUuid())
-                .build();
+                                            .sourceUserUuid(searchAssignmentRequest.getSourceUserUuid())
+                                            .groupUuid(searchAssignmentRequest.getGroupUuid())
+                                            .build();
     }
 }

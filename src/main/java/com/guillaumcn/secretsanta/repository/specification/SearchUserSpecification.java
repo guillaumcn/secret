@@ -7,6 +7,7 @@ import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import lombok.Builder;
+import lombok.Getter;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.util.ArrayList;
@@ -14,9 +15,9 @@ import java.util.List;
 import java.util.Objects;
 
 @Builder
+@Getter
 public class SearchUserSpecification implements Specification<UserEntity> {
 
-    private String uuid;
     private String email;
     private String lastName;
     private String firstName;
@@ -24,10 +25,6 @@ public class SearchUserSpecification implements Specification<UserEntity> {
     @Override
     public Predicate toPredicate(Root<UserEntity> root, CriteriaQuery<?> query, CriteriaBuilder criteriaBuilder) {
         List<Predicate> predicates = new ArrayList<>();
-
-        if (Objects.nonNull(uuid)) {
-            predicates.add(criteriaBuilder.equal(root.get("uuid"), uuid));
-        }
 
         if (Objects.nonNull(email)) {
             predicates.add(criteriaBuilder.like(root.get("email"), "%" + email + "%"));
@@ -45,8 +42,7 @@ public class SearchUserSpecification implements Specification<UserEntity> {
     }
 
     public static SearchUserSpecification fromSearchRequest(SearchUserRequest searchUserRequest) {
-        return SearchUserSpecification.builder()
-                .uuid(searchUserRequest.getUuid())
+        return builder()
                 .email(searchUserRequest.getEmail())
                 .lastName(searchUserRequest.getLastName())
                 .firstName(searchUserRequest.getFirstName())

@@ -7,6 +7,7 @@ import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import lombok.Builder;
+import lombok.Getter;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Builder
+@Getter
 public class SearchAssignmentExceptionSpecification implements Specification<AssignmentExceptionEntity> {
 
     private String groupUuid;
@@ -40,8 +42,8 @@ public class SearchAssignmentExceptionSpecification implements Specification<Ass
 
     public static SearchAssignmentExceptionSpecification fromSearchRequest(SearchAssignmentExceptionRequest searchAssignmentExceptionRequest) {
         return SearchAssignmentExceptionSpecification.builder()
-                .userUuid(searchAssignmentExceptionRequest.getUserUuid())
-                .groupUuid(searchAssignmentExceptionRequest.getGroupUuid())
-                .build();
+                                                     .userUuid(searchAssignmentExceptionRequest.getUserUuid())
+                                                     .groupUuid(searchAssignmentExceptionRequest.getGroupUuid())
+                                                     .build();
     }
 }

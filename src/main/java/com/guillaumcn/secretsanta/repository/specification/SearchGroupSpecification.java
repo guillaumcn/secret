@@ -7,6 +7,7 @@ import jakarta.persistence.criteria.CriteriaQuery;
 import jakarta.persistence.criteria.Predicate;
 import jakarta.persistence.criteria.Root;
 import lombok.Builder;
+import lombok.Getter;
 import org.springframework.data.jpa.domain.Specification;
 
 import java.util.ArrayList;
@@ -14,6 +15,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Builder
+@Getter
 public class SearchGroupSpecification implements Specification<GroupEntity> {
 
     private String name;
@@ -36,8 +38,8 @@ public class SearchGroupSpecification implements Specification<GroupEntity> {
 
     public static SearchGroupSpecification fromSearchRequest(SearchGroupRequest searchGroupRequest) {
         return SearchGroupSpecification.builder()
-                .name(searchGroupRequest.getName())
-                .ownerUuid(searchGroupRequest.getOwnerUuid())
-                .build();
+                                       .name(searchGroupRequest.getName())
+                                       .ownerUuid(searchGroupRequest.getOwnerUuid())
+                                       .build();
     }
 }
