@@ -37,9 +37,9 @@ public class SearchAssignmentSpecification implements Specification<AssignmentEn
     }
 
     public static SearchAssignmentSpecification fromSearchRequest(SearchAssignmentRequest searchAssignmentRequest) {
-        return SearchAssignmentSpecification.builder()
-                                            .sourceUserUuid(searchAssignmentRequest.getSourceUserUuid())
-                                            .groupUuid(searchAssignmentRequest.getGroupUuid())
-                                            .build();
+        return builder()
+                .sourceUserUuid(searchAssignmentRequest.getSourceUserUuid())
+                .groupUuid(searchAssignmentRequest.getGroupUuid())
+                .build();
     }
 }

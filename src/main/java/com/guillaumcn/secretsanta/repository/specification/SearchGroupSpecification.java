@@ -37,9 +37,9 @@ public class SearchGroupSpecification implements Specification<GroupEntity> {
     }
 
     public static SearchGroupSpecification fromSearchRequest(SearchGroupRequest searchGroupRequest) {
-        return SearchGroupSpecification.builder()
-                                       .name(searchGroupRequest.getName())
-                                       .ownerUuid(searchGroupRequest.getOwnerUuid())
-                                       .build();
+        return builder()
+                .name(searchGroupRequest.getName())
+                .ownerUuid(searchGroupRequest.getOwnerUuid())
+                .build();
     }
 }

@@ -41,9 +41,9 @@ public class SearchAssignmentExceptionSpecification implements Specification<Ass
     }
 
     public static SearchAssignmentExceptionSpecification fromSearchRequest(SearchAssignmentExceptionRequest searchAssignmentExceptionRequest) {
-        return SearchAssignmentExceptionSpecification.builder()
-                                                     .userUuid(searchAssignmentExceptionRequest.getUserUuid())
-                                                     .groupUuid(searchAssignmentExceptionRequest.getGroupUuid())
-                                                     .build();
+        return builder()
+                .userUuid(searchAssignmentExceptionRequest.getUserUuid())
+                .groupUuid(searchAssignmentExceptionRequest.getGroupUuid())
+                .build();
     }
 }
