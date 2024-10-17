@@ -33,8 +33,9 @@
         <sonar.coverage.exclusions>
             **/config/**/*,
             **/controller/**/*,
-            **/repository/**/*
-            **/domain/exception/**/*
+            **/repository/**/*,
+            **/domain/exception/**/*,
+            **/SecretSantaApplication.java
         </sonar.coverage.exclusions>
     </properties>
     <dependencies>
