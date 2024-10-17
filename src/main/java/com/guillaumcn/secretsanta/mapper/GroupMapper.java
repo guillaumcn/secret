@@ -9,25 +9,26 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class GroupMapper {
-    public static GetGroupResponse mapToGetGroupResponse(GroupEntity groupEntity) {
+public final class GroupMapper {
+
+    public static GetGroupResponse mapToGetGroupResponse(GroupEntity groupEntity, boolean withOwner) {
         return GetGroupResponse.builder()
-                .uuid(groupEntity.getUuid())
-                .name(groupEntity.getName())
-                .owner(UserMapper.mapToGetUserResponse(groupEntity.getOwner(), false))
-                .build();
+                               .uuid(groupEntity.getUuid())
+                               .name(groupEntity.getName())
+                               .owner(withOwner ? UserMapper.mapToGetUserResponse(groupEntity.getOwner(), false) : null)
+                               .build();
     }
 
     public static CreateGroupResponse mapToCreateGroupResponse(GroupEntity groupEntity) {
         return CreateGroupResponse.builder()
-                .uuid(groupEntity.getUuid())
-                .build();
+                                  .uuid(groupEntity.getUuid())
+                                  .build();
     }
 
     public static GroupEntity mapToGroupEntity(CreateGroupRequest createGroupRequest, UserEntity ownerEntity) {
         return GroupEntity.builder()
-                .name(createGroupRequest.getName())
-                .owner(ownerEntity)
-                .build();
+                          .name(createGroupRequest.getName())
+                          .owner(ownerEntity)
+                          .build();
     }
 }

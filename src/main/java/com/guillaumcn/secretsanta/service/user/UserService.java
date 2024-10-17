@@ -53,7 +53,7 @@ public class UserService {
     public void updateUser(String userUuid, UpdateUserRequest updateUserRequest) throws UserNotFoundException {
         UserEntity user = userRetrievalService.findUser(userUuid);
         if (updateUserRequest.getPassword() != null) {
-            user.setPassword(updateUserRequest.getPassword());
+            user.setPassword(passwordEncoder.encode(updateUserRequest.getPassword()));
         }
         if (updateUserRequest.getLastName() != null) {
             user.setLastName(updateUserRequest.getLastName());

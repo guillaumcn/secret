@@ -17,7 +17,7 @@ public final class UserMapper {
                               .lastName(userEntity.getLastName())
                               .firstName(userEntity.getFirstName())
                               .groups(withGroups ?
-                                              userEntity.getGroups().stream().map(GroupMapper::mapToGetGroupResponse).toList() :
+                                              userEntity.getGroups().stream().map(group -> GroupMapper.mapToGetGroupResponse(group, false)).toList() :
                                               null)
                               .createdAt(userEntity.getCreatedAt())
                               .updatedAt(userEntity.getUpdatedAt())

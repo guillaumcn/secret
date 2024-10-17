@@ -41,13 +41,13 @@ public class GroupService {
     @Transactional(readOnly = true)
     public GetGroupResponse getGroup(String groupUuid) throws GroupNotFoundException {
         GroupEntity group = groupRetrievalService.findGroup(groupUuid);
-        return GroupMapper.mapToGetGroupResponse(group);
+        return GroupMapper.mapToGetGroupResponse(group, true);
     }
 
     @Transactional(readOnly = true)
     public List<GetGroupResponse> searchGroups(SearchGroupRequest searchGroupRequest) {
         List<GroupEntity> foundGroups = groupRetrievalService.searchGroups(searchGroupRequest);
-        return foundGroups.stream().map(GroupMapper::mapToGetGroupResponse).toList();
+        return foundGroups.stream().map(foundGroup -> GroupMapper.mapToGetGroupResponse(foundGroup, true)).toList();
     }
 
     @Transactional
@@ -68,7 +68,7 @@ public class GroupService {
     public void assignUserToGroup(String groupUuid, AssignGroupUserRequest assignGroupUserRequest) throws GroupNotFoundException, UserNotFoundException {
         GroupEntity group = groupRetrievalService.findGroup(groupUuid);
         UserEntity user = userRetrievalService.findUser(assignGroupUserRequest.getUserUuid());
-        
+
         List<GroupEntity> currentGroups = user.getGroups();
         if (groupContains(currentGroups, group)) {
             return;

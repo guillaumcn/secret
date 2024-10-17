@@ -9,29 +9,30 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class AssignmentExceptionMapper {
+public final class AssignmentExceptionMapper {
+
     public static GetAssignmentExceptionResponse mapToGetAssignmentException(AssignmentExceptionEntity assignmentExceptionEntity) {
         return GetAssignmentExceptionResponse.builder()
-                .uuid(assignmentExceptionEntity.getUuid())
-                .sourceUser(UserMapper.mapToGetUserResponse(assignmentExceptionEntity.getSourceUser(), false))
-                .targetUser(UserMapper.mapToGetUserResponse(assignmentExceptionEntity.getTargetUser(), false))
-                .group(GroupMapper.mapToGetGroupResponse(assignmentExceptionEntity.getGroup()))
-                .createdAt(assignmentExceptionEntity.getCreatedAt())
-                .updatedAt(assignmentExceptionEntity.getUpdatedAt())
-                .build();
+                                             .uuid(assignmentExceptionEntity.getUuid())
+                                             .sourceUser(UserMapper.mapToGetUserResponse(assignmentExceptionEntity.getSourceUser(), false))
+                                             .targetUser(UserMapper.mapToGetUserResponse(assignmentExceptionEntity.getTargetUser(), false))
+                                             .group(GroupMapper.mapToGetGroupResponse(assignmentExceptionEntity.getGroup(), false))
+                                             .createdAt(assignmentExceptionEntity.getCreatedAt())
+                                             .updatedAt(assignmentExceptionEntity.getUpdatedAt())
+                                             .build();
     }
 
     public static CreateAssignmentExceptionResponse mapToCreateAssignmentExceptionResponse(AssignmentExceptionEntity assignmentExceptionEntity) {
         return CreateAssignmentExceptionResponse.builder()
-                .uuid(assignmentExceptionEntity.getUuid())
-                .build();
+                                                .uuid(assignmentExceptionEntity.getUuid())
+                                                .build();
     }
 
     public static AssignmentExceptionEntity mapToAssignmentExceptionEntity(UserEntity sourceUser, UserEntity targetUser, GroupEntity group) {
         return AssignmentExceptionEntity.builder()
-                .sourceUser(sourceUser)
-                .targetUser(targetUser)
-                .group(group)
-                .build();
+                                        .sourceUser(sourceUser)
+                                        .targetUser(targetUser)
+                                        .group(group)
+                                        .build();
     }
 }
