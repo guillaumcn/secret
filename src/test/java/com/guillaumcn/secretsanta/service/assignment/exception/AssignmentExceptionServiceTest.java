@@ -1,12 +1,15 @@
 package com.guillaumcn.secretsanta.service.assignment.exception;
 
+import com.guillaumcn.secretsanta.domain.exception.AssignmentExceptionNotFoundException;
 import com.guillaumcn.secretsanta.domain.exception.GroupNotFoundException;
 import com.guillaumcn.secretsanta.domain.exception.UserNotFoundException;
 import com.guillaumcn.secretsanta.domain.model.AssignmentExceptionEntity;
 import com.guillaumcn.secretsanta.domain.model.GroupEntity;
 import com.guillaumcn.secretsanta.domain.model.UserEntity;
 import com.guillaumcn.secretsanta.domain.request.assignment.exception.CreateAssignmentExceptionRequest;
+import com.guillaumcn.secretsanta.domain.request.assignment.exception.SearchAssignmentExceptionRequest;
 import com.guillaumcn.secretsanta.domain.response.assignment.exception.CreateAssignmentExceptionResponse;
+import com.guillaumcn.secretsanta.domain.response.assignment.exception.GetAssignmentExceptionResponse;
 import com.guillaumcn.secretsanta.repository.AssignmentExceptionRepository;
 import com.guillaumcn.secretsanta.service.group.GroupRetrievalService;
 import com.guillaumcn.secretsanta.service.user.UserRetrievalService;
@@ -17,6 +20,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.time.LocalDateTime;
+import java.util.Collections;
+import java.util.List;
+
+import static com.guillaumcn.secretsanta.creator.GroupCreator.createGroup;
+import static com.guillaumcn.secretsanta.creator.UserCreator.createUser;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNull;
 import static org.mockito.ArgumentMatchers.any;
@@ -38,6 +47,9 @@ public class AssignmentExceptionServiceTest {
 
     @Mock
     private GroupRetrievalService groupRetrievalService;
+
+    @Mock
+    private AssignmentExceptionRetrievalService assignmentExceptionRetrievalService;
 
     @InjectMocks
     private AssignmentExceptionService assignmentExceptionService;
@@ -85,5 +97,61 @@ public class AssignmentExceptionServiceTest {
         assertEquals(TARGET_USER_UUID, assignmentExceptionEntityArgument.getTargetUser().getUuid());
         assertEquals(GROUP_UUID, assignmentExceptionEntityArgument.getGroup().getUuid());
         assertEquals(ASSIGNMENT_EXCEPTION_UUID, response.getUuid());
+    }
+
+    @Test
+    void testSearchAssignmentException() {
+        // GIVEN
+        LocalDateTime now = LocalDateTime.now();
+        AssignmentExceptionEntity assignmentException = createAssignmentException(now);
+        SearchAssignmentExceptionRequest searchAssignmentExceptionRequest = SearchAssignmentExceptionRequest
+                .builder()
+                .userUuid(SOURCE_USER_UUID)
+                .build();
+
+        when(assignmentExceptionRetrievalService.searchAssignmentException(any(SearchAssignmentExceptionRequest.class))).thenReturn(Collections.singletonList(assignmentException));
+
+        // WHEN
+        List<GetAssignmentExceptionResponse> response = assignmentExceptionService.searchAssignmentExceptions(searchAssignmentExceptionRequest);
+
+        // THEN
+        assertEquals(1, response.size());
+        GetAssignmentExceptionResponse firstResponse = response.getFirst();
+        assertEquals(ASSIGNMENT_EXCEPTION_UUID, firstResponse.getUuid());
+        assertEquals(GROUP_UUID, firstResponse.getGroup().getUuid());
+        assertEquals(SOURCE_USER_UUID, firstResponse.getSourceUser().getUuid());
+        assertEquals(TARGET_USER_UUID, firstResponse.getTargetUser().getUuid());
+        assertEquals(now, firstResponse.getCreatedAt());
+        assertEquals(now, firstResponse.getUpdatedAt());
+    }
+
+    @Test
+    void testDeleteGroup() throws AssignmentExceptionNotFoundException {
+        // GIVEN
+        LocalDateTime now = LocalDateTime.now();
+        AssignmentExceptionEntity assignmentException = createAssignmentException(now);
+
+        when(assignmentExceptionRetrievalService.findAssignmentException(ASSIGNMENT_EXCEPTION_UUID)).thenReturn(assignmentException);
+
+        // WHEN
+        assignmentExceptionService.deleteAssignmentException(ASSIGNMENT_EXCEPTION_UUID);
+
+        // THEN
+        verify(assignmentExceptionRepository).delete(assignmentException);
+    }
+
+    private static AssignmentExceptionEntity createAssignmentException(LocalDateTime now) {
+        UserEntity sourceUser = createUser(SOURCE_USER_UUID);
+        UserEntity targetUser = createUser(TARGET_USER_UUID);
+        GroupEntity group = createGroup(GROUP_UUID);
+
+        return AssignmentExceptionEntity.builder()
+                                        .uuid(ASSIGNMENT_EXCEPTION_UUID)
+                                        .sourceUser(sourceUser)
+                                        .targetUser(targetUser)
+                                        .group(group)
+                                        .createdAt(now)
+                                        .updatedAt(now)
+                                        .build();
     }
 }
