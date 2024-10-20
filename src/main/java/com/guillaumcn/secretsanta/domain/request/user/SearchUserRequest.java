@@ -1,6 +1,10 @@
 package com.guillaumcn.secretsanta.domain.request.user;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -9,7 +13,6 @@ import lombok.*;
 @Setter
 public class SearchUserRequest {
 
-    private String uuid;
     private String email;
     private String lastName;
     private String firstName;

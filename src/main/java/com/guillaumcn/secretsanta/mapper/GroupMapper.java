@@ -16,6 +16,8 @@ public final class GroupMapper {
                                .uuid(groupEntity.getUuid())
                                .name(groupEntity.getName())
                                .owner(withOwner ? UserMapper.mapToGetUserResponse(groupEntity.getOwner(), false) : null)
+                               .createdAt(groupEntity.getCreatedAt())
+                               .updatedAt(groupEntity.getUpdatedAt())
                                .build();
     }
 

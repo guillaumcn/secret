@@ -117,7 +117,7 @@ public class UserServiceTest {
         UserEntity user = createUser(now);
         SearchUserRequest searchUserRequest = SearchUserRequest
                 .builder()
-                .uuid(USER_UUID)
+                .lastName(USER_LAST_NAME)
                 .build();
 
         when(userRetrievalService.searchUsers(any(SearchUserRequest.class))).thenReturn(Collections.singletonList(user));

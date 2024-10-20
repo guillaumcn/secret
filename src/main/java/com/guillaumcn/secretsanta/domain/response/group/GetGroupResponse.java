@@ -6,6 +6,8 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDateTime;
+
 @Builder
 @Getter
 @NoArgsConstructor
@@ -15,4 +17,6 @@ public class GetGroupResponse {
     private String uuid;
     private String name;
     private GetUserResponse owner;
+    private LocalDateTime createdAt;
+    private LocalDateTime updatedAt;
 }
