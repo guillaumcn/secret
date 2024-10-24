@@ -6,13 +6,14 @@ import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
-public class NoteMapper {
+public final class NoteMapper {
+
     public static GetNoteResponse mapToGetNote(NoteEntity noteEntity) {
         return GetNoteResponse.builder()
-                .uuid(noteEntity.getUuid())
-                .value(noteEntity.getValue())
-                .createdAt(noteEntity.getCreatedAt())
-                .updatedAt(noteEntity.getUpdatedAt())
-                .build();
+                              .uuid(noteEntity.getUuid())
+                              .value(noteEntity.getValue())
+                              .createdAt(noteEntity.getCreatedAt())
+                              .updatedAt(noteEntity.getUpdatedAt())
+                              .build();
     }
 }

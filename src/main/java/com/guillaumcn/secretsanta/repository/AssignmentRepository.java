@@ -9,6 +9,7 @@ import java.util.List;
 
 @Repository
 public interface AssignmentRepository extends CrudRepository<AssignmentEntity, String> {
+
     List<AssignmentEntity> findAll(Specification<AssignmentEntity> specification);
 
 }

@@ -13,6 +13,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class GroupRetrievalService {
+
     private final GroupRepository groupRepository;
 
     public GroupEntity findGroup(String groupUuid) throws GroupNotFoundException {

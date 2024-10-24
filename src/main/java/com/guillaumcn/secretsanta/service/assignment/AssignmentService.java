@@ -15,13 +15,13 @@ import com.guillaumcn.secretsanta.mapper.AssignmentMapper;
 import com.guillaumcn.secretsanta.repository.AssignmentRepository;
 import com.guillaumcn.secretsanta.service.assignment.exception.AssignmentExceptionRetrievalService;
 import com.guillaumcn.secretsanta.service.group.GroupRetrievalService;
+import com.guillaumcn.secretsanta.utils.ListShuffler;
 import com.guillaumcn.secretsanta.validator.AssignmentValidator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 @Service
@@ -32,6 +32,8 @@ public class AssignmentService {
     private final AssignmentRepository assignmentRepository;
     private final GroupRetrievalService groupRetrievalService;
     private final AssignmentExceptionRetrievalService assignmentExceptionRetrievalService;
+    private final AssignmentValidator assignmentValidator;
+    private final ListShuffler<UserEntity> listShuffler;
 
     @Transactional(readOnly = true)
     public List<GetAssignmentResponse> searchAssignments(SearchAssignmentRequest searchAssignmentRequest) {
@@ -54,31 +56,19 @@ public class AssignmentService {
         assignmentRepository.saveAll(assignments);
     }
 
-    private static List<AssignmentEntity> getUserAssignments(List<UserEntity> users, List<AssignmentExceptionEntity> assignmentExceptions, GroupEntity group) throws ImpossibleAssignmentException {
-        AssignmentValidator.assertAssignationIsPossible(users, assignmentExceptions);
+    private List<AssignmentEntity> getUserAssignments(List<UserEntity> users, List<AssignmentExceptionEntity> assignmentExceptions, GroupEntity group) throws ImpossibleAssignmentException {
+        assignmentValidator.assertAssignationIsPossible(users, assignmentExceptions);
 
         List<UserEntity> shuffledUsers = shuffleUntilValidAssignments(users, assignmentExceptions);
         return getAssignmentEntities(users, shuffledUsers, group);
     }
 
-    private static List<AssignmentEntity> getAssignmentEntities(List<UserEntity> users, List<UserEntity> shuffledUsers, GroupEntity group) {
-        List<AssignmentEntity> assignments = new ArrayList<>();
-        for (int i = 0; i < users.size(); i++) {
-            assignments.add(AssignmentEntity.builder()
-                                            .sourceUser(users.get(i))
-                                            .targetUser(shuffledUsers.get(i))
-                                            .group(group)
-                                            .build());
-        }
-        return assignments;
-    }
-
-    private static List<UserEntity> shuffleUntilValidAssignments(List<UserEntity> users, List<AssignmentExceptionEntity> assignmentExceptions) {
-        List<UserEntity> shuffledUsers = new ArrayList<>(users);
+    private List<UserEntity> shuffleUntilValidAssignments(List<UserEntity> users, List<AssignmentExceptionEntity> assignmentExceptions) {
+        List<UserEntity> shuffledUsers;
 
         boolean shuffleOk;
         do {
-            Collections.shuffle(shuffledUsers);
+            shuffledUsers = listShuffler.shuffle(users);
             shuffleOk = true;
             for (int i = 0; i < users.size(); i++) {
                 UserEntity sourceUser = users.get(i);
@@ -91,5 +81,17 @@ public class AssignmentService {
         } while (!shuffleOk);
 
         return shuffledUsers;
+    }
+
+    private static List<AssignmentEntity> getAssignmentEntities(List<UserEntity> users, List<UserEntity> shuffledUsers, GroupEntity group) {
+        List<AssignmentEntity> assignments = new ArrayList<>();
+        for (int i = 0; i < users.size(); i++) {
+            assignments.add(AssignmentEntity.builder()
+                                            .sourceUser(users.get(i))
+                                            .targetUser(shuffledUsers.get(i))
+                                            .group(group)
+                                            .build());
+        }
+        return assignments;
     }
 }

@@ -13,6 +13,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class AssignmentRetrievalService {
+
     private final AssignmentRepository assignmentRepository;
 
     public AssignmentEntity findAssignment(String assignmentUuid) throws AssignmentNotFoundException {

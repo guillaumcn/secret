@@ -13,6 +13,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 public class UserRetrievalService {
+
     private final UserRepository userRepository;
 
     public UserEntity findUser(String userUuid) throws UserNotFoundException {

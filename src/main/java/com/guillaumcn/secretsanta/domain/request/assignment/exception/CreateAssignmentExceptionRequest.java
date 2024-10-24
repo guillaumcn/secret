@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @Getter
 public class CreateAssignmentExceptionRequest {
+
     private String sourceUserUuid;
     private String targetUserUuid;
     private String groupUuid;

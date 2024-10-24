@@ -18,18 +18,20 @@ class AssignmentValidatorTest {
     private static final String USER_UUID_2 = "USER_UUID_2";
     private static final String USER_UUID_3 = "USER_UUID_3";
 
+    private final AssignmentValidator assignmentValidator = new AssignmentValidator();
+
     @Test
     void onlyOneUser_checkIfAssignationIsPossible_throwException() {
         List<UserEntity> singleUserList = Collections.singletonList(createUser(USER_UUID_1));
         List<AssignmentExceptionEntity> emptyExceptions = Collections.emptyList();
-        assertThrows(ImpossibleAssignmentException.class, () -> AssignmentValidator.assertAssignationIsPossible(singleUserList, emptyExceptions));
+        assertThrows(ImpossibleAssignmentException.class, () -> assignmentValidator.assertAssignationIsPossible(singleUserList, emptyExceptions));
     }
 
     @Test
     void noExceptions_checkIfAssignationIsPossible_doNotThrowException() throws ImpossibleAssignmentException {
         List<UserEntity> userList = List.of(createUser(USER_UUID_1), createUser(USER_UUID_2));
         List<AssignmentExceptionEntity> emptyExceptions = Collections.emptyList();
-        AssignmentValidator.assertAssignationIsPossible(userList, emptyExceptions);
+        assignmentValidator.assertAssignationIsPossible(userList, emptyExceptions);
     }
 
     @Test
@@ -40,7 +42,7 @@ class AssignmentValidatorTest {
         List<AssignmentExceptionEntity> exceptions = List.of(
                 createAssignmentException(firstUser, secondUser)
         );
-        assertThrows(ImpossibleAssignmentException.class, () -> AssignmentValidator.assertAssignationIsPossible(userList, exceptions));
+        assertThrows(ImpossibleAssignmentException.class, () -> assignmentValidator.assertAssignationIsPossible(userList, exceptions));
     }
 
     @Test
@@ -52,6 +54,6 @@ class AssignmentValidatorTest {
         List<AssignmentExceptionEntity> exceptions = List.of(
                 createAssignmentException(firstUser, secondUser)
         );
-        AssignmentValidator.assertAssignationIsPossible(userList, exceptions);
+        assignmentValidator.assertAssignationIsPossible(userList, exceptions);
     }
 }
