@@ -4,6 +4,7 @@ import com.guillaumcn.secretsanta.domain.exception.GroupNotFoundException;
 import com.guillaumcn.secretsanta.domain.exception.UserNotFoundException;
 import com.guillaumcn.secretsanta.domain.model.GroupEntity;
 import com.guillaumcn.secretsanta.domain.model.UserEntity;
+import com.guillaumcn.secretsanta.domain.request.group.AssignGroupUserRequest;
 import com.guillaumcn.secretsanta.domain.request.group.CreateGroupRequest;
 import com.guillaumcn.secretsanta.domain.request.group.SearchGroupRequest;
 import com.guillaumcn.secretsanta.domain.request.group.UpdateGroupRequest;
@@ -179,6 +180,54 @@ public class GroupServiceTest {
         // THEN
         assertEquals(GROUP_NAME, group.getName());
         assertNotEquals(now, group.getUpdatedAt());
+    }
+
+    @Test
+    void assignToGroup_alreadyAssigned_shouldDoNothing() throws GroupNotFoundException, UserNotFoundException {
+        // GIVEN
+        LocalDateTime now = LocalDateTime.now();
+
+        GroupEntity group = createGroup(now);
+        UserEntity user = createUser(OWNER_USER_UUID, Collections.singletonList(group));
+
+        when(groupRetrievalService.findGroup(GROUP_UUID)).thenReturn(group);
+        when(userRetrievalService.findUser(OWNER_USER_UUID)).thenReturn(user);
+
+        AssignGroupUserRequest assignGroupUserRequest = AssignGroupUserRequest.builder()
+                                                                              .userUuid(OWNER_USER_UUID)
+                                                                              .build();
+
+        // WHEN
+        groupService.assignUserToGroup(GROUP_UUID, assignGroupUserRequest);
+
+        // THEN
+        assertEquals(1, user.getGroups().size());
+        assertEquals(now, group.getUpdatedAt());
+    }
+
+    @Test
+    void assignToGroup_notAlreadyAssigned_shouldAssign() throws GroupNotFoundException, UserNotFoundException {
+        // GIVEN
+        LocalDateTime now = LocalDateTime.now();
+
+        GroupEntity group = createGroup(now);
+        UserEntity user = createUser(OWNER_USER_UUID, Collections.emptyList());
+
+        when(groupRetrievalService.findGroup(GROUP_UUID)).thenReturn(group);
+        when(userRetrievalService.findUser(OWNER_USER_UUID)).thenReturn(user);
+
+        AssignGroupUserRequest assignGroupUserRequest = AssignGroupUserRequest.builder()
+                                                                              .userUuid(OWNER_USER_UUID)
+                                                                              .build();
+
+        // WHEN
+        groupService.assignUserToGroup(GROUP_UUID, assignGroupUserRequest);
+
+        // THEN
+        assertEquals(1, user.getGroups().size());
+        assertEquals(GROUP_UUID, user.getGroups().getFirst().getUuid());
+        assertNotEquals(now, group.getUpdatedAt());
+        assertNotEquals(now, user.getUpdatedAt());
     }
 
     private static GroupEntity createGroup(LocalDateTime now) {
